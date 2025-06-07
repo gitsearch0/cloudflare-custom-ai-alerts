@@ -207,6 +207,8 @@ For local development:
 The solution can be enhanced with Cloudflare Workers and Workflows to add more robust features:
 
 ```javascript
+import { Workflow } from 'cloudflare:workflows';
+
 export default {
 	async fetch(request, env, ctx) {
 		const workflow = new Workflow({
@@ -235,8 +237,13 @@ export default {
 		});
 
 		workflow.addStep('send-alert', async (context) => {
-			//send webhook or email alerts
+			// Send webhook or email alerts
 		});
+
+		// Start the workflow
+		await workflow.start();
+
+		return new Response('Workflow execution started', { status: 200 });
 	},
 };
 ```
