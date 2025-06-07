@@ -1,4 +1,4 @@
-//ARL  Ruleset ID
+//ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
 const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
 
 
@@ -53,7 +53,7 @@ Events: ${JSON.stringify(events, null, 2)}`;
         const aiResponse = await env.AI.run('@cf/meta/llama-4-scout-17b-16e-instruct', {
             messages: [{
                 role: "system",
-                content: "You are a SOC analyst. Provide concise, well-formatted security analysis. Keep responses brief and focused. Use bullet points and clear sections. Avoid lengthy explanations."
+                content: "You are a SOC analyst. Provide concise, well-formatted security analysis. Keep responses brief and focused. Use bullet points and clear sections. Avoid lengthy explanations. NOTE: Similar Ja4 can be recommended to identify and block attack traffic as Immediate action"
             }, {
                 role: "user",
                 content: prompt
@@ -158,6 +158,8 @@ const sendAlert = async (events, zoneTag, env) => {
 
 console.log("getSimpleHash", getSimpleHash)
 
+// rulesetId_like: "${rlrulesetId}",
+
 export default {
 	// Scheduled Handler
 	async scheduled(event, env, ctx) {
@@ -175,12 +177,12 @@ export default {
 						zoneTag
 						firewallEventsAdaptiveGroups(
 							filter: { 
-							    rulesetId_like: "${rlrulesetId}",
+							   
 								datetime_geq: "${timeWindow.start}",
 								datetime_leq: "${timeWindow.end}"
 							}
 							orderBy: [count_DESC]
-							limit: 10
+							limit: 25
 						) {
 							count
 							dimensions {
