@@ -179,6 +179,10 @@ For local development:
 - [Workers AI](https://developers.cloudflare.com/workers-ai/)
 - [Workers Secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
 
+## Webhook
+
+![Webhook](https://r2.zxc.co.in/git_readme/ai_webhook.png)
+
 ## Future Enhancements
 
 ### Cloudflare Workers and Workflows Integration
