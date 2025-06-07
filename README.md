@@ -207,45 +207,25 @@ For local development:
 The solution can be enhanced with Cloudflare Workers and Workflows to add more robust features:
 
 ```javascript
-import { Workflow } from 'cloudflare:workflows';
-
-export default {
-	async fetch(request, env, ctx) {
-		const workflow = new Workflow({
-			id: 'ddos-alert-workflow',
-			retry: {
-				maxAttempts: 3,
-				backoff: {
-					type: 'exponential',
-					initialDelay: 1000, // 1 second
-					maxDelay: 10000, // 10 seconds
-				},
-			},
-		});
-
-		// Add steps to the workflow
-		workflow.addStep('fetch-graphql', async () => {
+export class DDoSAlertWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		const graphqlData = await step.do('fetch-graphql', async () => {
 			// Your existing GraphQL query logic
 		});
 
-		workflow.addStep('process-events', async (context) => {
+		const processed = await step.do('process-events', async () => {
 			// Process events and check thresholds
 		});
 
-		workflow.addStep('ai-analysis', async (context) => {
+		const analysis = await step.do('ai-analysis', async () => {
 			// AI analysis of security events using Workers AI
 		});
 
-		workflow.addStep('send-alert', async (context) => {
+		await step.do('send-alert', async () => {
 			// Send webhook or email alerts
 		});
-
-		// Start the workflow
-		await workflow.start();
-
-		return new Response('Workflow execution started', { status: 200 });
-	},
-};
+	}
+}
 ```
 
 This enhancement would provide:
