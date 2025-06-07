@@ -28,7 +28,9 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
      - Zone: Read
    - [Create API Token](https://dash.cloudflare.com/profile/api-tokens)
 
-2. **Get Ruleset ID**
+2. **Get Rate Limit Ruleset ID to Monitor Rate Limit rules**
+
+   - Note : To Monitor entire Security events, this is not requried; Remove the Ruleset ID from Graphql Query
 
    - Using API:
      ```bash
@@ -36,10 +38,19 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
      -H "Authorization: Bearer {api_token}"
      ```
    - Or from Dashboard:
-     - Go to Security > WAF > Rulesets
-     - Find your ruleset and copy the ID
 
-3. **Create Cloudflare KV Namespace**
+3. **Optional: Get Specific Rate Limit Rule ID**
+
+   - This is optional if you want to monitor a single rate limit rule instead of all rules
+
+   - Using API:
+     ```bash
+     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{customrule_rulesetid}" \
+     -H "Authorization: Bearer {api_token}"
+     ```
+   - Or from Dashboard:
+
+4. **Create Cloudflare KV Namespace**
 
    ```bash
    wrangler kv:namespace create "ALERTS_KV"
@@ -47,7 +58,7 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
 
    - Note the ID and add it to `wrangler.jsonc`
 
-4. **Environment Variables**
+5. **Environment Variables**
    Create `.env.vars` file with:
 
    ```
@@ -56,7 +67,7 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
    WEBHOOK_URL="your_webhook_url"
    ```
 
-5. **Enable Workers AI**
+6. **Enable Workers AI**
    - Go to Workers & Pages > AI
    - Enable AI for your account
    - Add AI binding to `wrangler.jsonc`

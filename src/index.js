@@ -1,8 +1,6 @@
 //ARL  Ruleset ID
 const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
 
-//or WAF Ruleset ID or RuleID for specific custom rule or RL rule
-const wafRulesetId = "efb7b8c949ac4650a09736fc376e9aee";
 
 // Get time window for last 24 hours
 const getTimeWindow = () => {
@@ -20,10 +18,10 @@ const getStateKey = (rulesetId) => `state_${rulesetId}`;
 // Simple hash function for state comparison 
 // JSON.stringify(data) - Converts the data to a string
 // btoa() - Converts the string to base64
-// slice(0, 32) - Takes first 32 characters
-// check README.md for other ideas
+// slice(0, 32) - Takes first 64 characters
+// Crypto API can be used to generate a more secure hash if needed
 const getSimpleHash = (data) => {
-    return btoa(JSON.stringify(data)).slice(0, 32);
+    return btoa(JSON.stringify(data)).slice(0, 64);
 };
 
 // AI Analysis function
@@ -96,7 +94,7 @@ const sendAlert = async (events, zoneTag, env) => {
         cards: [
             {
                 header: {
-                    title: `🚨 Security Events Detected on ${zoneTag} 🚨`,
+                    title: `🚨 Security Events Detected on **zone_name** 🚨`,
                     subtitle: `From: Cloudflare Workers || Time: ${new Date().toISOString()}`
                 },
                 sections: [
