@@ -89,9 +89,14 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
    	],
    	"ai": {
    		"binding": "AI"
+   	},
+   	"triggers": {
+   		"crons": ["* * * * *"]
    	}
    }
    ```
+
+   The cron trigger `"* * * * *"` will run the worker every minute. You can adjust the cron schedule as needed.
 
 2. **Set Secrets**
    ```bash
@@ -115,6 +120,7 @@ After deployment:
 
 ## How It Works
 
+- Run Cloudflare workers cron
 - Look at events from the last 24 hours each time it runs
 - Compare the current state with the previous state stored in KV
 - Only trigger alerts when there is changes in the 24-hour window
