@@ -13,11 +13,13 @@ const getTimeWindow = () => {
 // KV Key for state comparison
 const getStateKey = (rulesetId) => `state_${rulesetId}`;
 
-// Simple hash function for state comparison 
-// JSON.stringify(data) - Converts the data to a string
-// btoa() - Converts the string to base64
-// slice(0, 32) - Takes first 64 characters
-// Crypto API can be used to generate a more secure hash if needed
+/*
+Simple hash function for state comparison 
+JSON.stringify(data) - Converts the data to a string
+btoa() - Converts the string to base64
+slice(0, 32) - Takes first 64 characters
+Crypto API can be used to generate a more secure hash if needed
+*/
 const getSimpleHash = (data) => {
     return btoa(JSON.stringify(data)).slice(0, 64);
 };
@@ -158,13 +160,15 @@ const sendAlert = async (events, zoneTag, env) => {
 
 console.log("getSimpleHash", getSimpleHash)
 
-//ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
-//const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
+/*
+ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
+const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
+rulesetId_like: "${rlrulesetId}",
+*/
 
-// rulesetId_like: "${rlrulesetId}",
-
+// Scheduled Handler worker
 export default {
-	// Scheduled Handler
+
 	async scheduled(event, env, ctx) {
 		console.log("Cron job started at:", new Date().toISOString());
 
