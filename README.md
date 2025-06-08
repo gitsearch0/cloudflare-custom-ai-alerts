@@ -28,9 +28,11 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
      - Zone: Read
    - [Create API Token](https://dash.cloudflare.com/profile/api-tokens)
 
-2. **Get Rate Limit Ruleset ID to Monitor Rate Limit rules**
+2. **Optional: Monitor Specific Rulesets**
 
-   - Note : To Monitor entire Security events, this is not requried; Remove the Ruleset ID from Graphql Query
+   By default, the worker monitors all security events. However, you can optionally configure it to monitor specific types of rulesets (add filter in Graphql API):
+
+   a) **Monitor Rate Limit Rules**
 
    - Using API:
      ```bash
@@ -38,17 +40,45 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
      -H "Authorization: Bearer {api_token}"
      ```
    - Or from Dashboard:
+     - Go to Security > WAF > Rulesets
+     - Find your rate limit ruleset and copy the ID
 
-3. **Optional: Get Specific Rate Limit Rule ID**
-
-   - This is optional if you want to monitor a single rate limit rule instead of all rules
+   b) **Monitor Custom Rules**
 
    - Using API:
      ```bash
-     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{customrule_rulesetid}" \
+     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
      -H "Authorization: Bearer {api_token}"
      ```
    - Or from Dashboard:
+     - Go to Security > WAF > Rulesets
+     - Find your custom ruleset and copy the ID
+
+   c) **Monitor Managed Rules**
+
+   - Using API:
+     ```bash
+     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+     -H "Authorization: Bearer {api_token}"
+     ```
+   - Or from Dashboard:
+     - Go to Security > WAF > Rulesets
+     - Find your managed ruleset and copy the ID
+
+3. **Optional: Monitor Specific Rules**
+
+   You can also monitor individual rules within a ruleset (e.g., specific DDoS signatures or rate limit rules):
+
+   - Using API:
+     ```bash
+     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+     -H "Authorization: Bearer {api_token}"
+     ```
+   - Or from Dashboard:
+     - Go to Security > WAF > Rulesets
+     - Find your ruleset and copy the specific rule ID
+
+   Note: To monitor specific rules, you'll need to modify the GraphQL query in the worker code to include the rule ID filter.
 
 4. **Create Cloudflare KV Namespace**
 
@@ -102,7 +132,7 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
    ```bash
    npx wrangler secret bulk .env.vars
    ```
-   This command will upload all environment variables from your `.env.vars` file as secrets.
+   This command will upload all environment variables from your `.env.vars` file as secrets. Best practice to not to expose secrets in the code.
 
 ## Deployment
 

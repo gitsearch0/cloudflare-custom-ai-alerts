@@ -1,5 +1,3 @@
-//ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
-const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
 
 
 // Get time window for last 24 hours
@@ -159,6 +157,9 @@ const sendAlert = async (events, zoneTag, env) => {
 };
 
 console.log("getSimpleHash", getSimpleHash)
+
+//ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
+//const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
 
 // rulesetId_like: "${rlrulesetId}",
 
