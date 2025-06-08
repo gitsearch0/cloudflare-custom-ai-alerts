@@ -89,6 +89,7 @@ const sendAlert = async (events, zoneTag, env) => {
     const asns = new Set(events.map(e => e.dimensions.clientAsn));
     const responseStatuses = new Set(events.map(e => e.dimensions.edgeResponseStatus));
     const ja4Fingerprints = new Set(events.map(e => e.dimensions.ja4));
+    const ruleNames = new Set(events.map(e => e.dimensions.description));
 
     const cardMessage = {
         cards: [
@@ -110,7 +111,8 @@ const sendAlert = async (events, zoneTag, env) => {
 • Actions: ${Array.from(actions).join(', ')}
 • Response Statuses: ${Array.from(responseStatuses).join(', ')}
 • JA4 Fingerprints: ${Array.from(ja4Fingerprints).join(', ')}
-• Targeted Paths: ${Array.from(paths).join(', ')}`
+• Targeted Paths: ${Array.from(paths).join(', ')}
+• Triggered Rules: ${Array.from(ruleNames).join(', ')}`
                                 }
                             }
                         ]
@@ -179,7 +181,8 @@ export default {
 							filter: { 
 							   
 								datetime_geq: "${timeWindow.start}",
-								datetime_leq: "${timeWindow.end}"
+								datetime_leq: "${timeWindow.end}",
+                                clientAsn_notlike: "13335"
 							}
 							orderBy: [count_DESC]
 							limit: 25
