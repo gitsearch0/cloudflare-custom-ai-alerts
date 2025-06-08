@@ -256,7 +256,7 @@ For local development:
 
 ## Webhook
 
-![Webhook](https://r2.zxc.co.in/git_readme/ai_webhook.png)
+![Webhook](https://r2.zxc.co.in/git_readme/ai-alert.png)
 
 ## Future Enhancements
 
