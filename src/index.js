@@ -84,7 +84,7 @@ Events: ${JSON.stringify(events, null, 2)}`;
 };
 
 // Send alert to Google Chat
-const sendAlert = async (events, zoneTag, env) => {
+const sendAlert = async (events, env) => {
     // Get AI analysis
     const aiAnalysis = await analyzeWithAI(events, env);
     
@@ -171,8 +171,7 @@ console.log("getSimpleHash", getSimpleHash)
 /*
 ARL  Ruleset ID; Ruleset ID is optional, if you want to monitor all rulesets, remove the rulesetId_like from the Graphql Query
 const rlrulesetId = "890ec27b8b5642d3b548d5fcc557e7d5";
-
-rulesetId_like: "${rlrulesetId}",
+add filter : rulesetId_like: "${rlrulesetId}" to Graphql Query
 
 Note: 
 1. Limit is 25 events, if you want to monitor more events, increase the limit in the Graphql Query; However, consider Model Token Limit and response time.
