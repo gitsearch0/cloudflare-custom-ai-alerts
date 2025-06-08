@@ -176,7 +176,7 @@ rulesetId_like: "${rlrulesetId}",
 
 Note: 
 1. Limit is 25 events, if you want to monitor more events, increase the limit in the Graphql Query; However, consider Model Token Limit and response time.
-2. For llama 4 scout 17b,context window is 131,000 tokens 
+2. For llama 4 scout 17b,context window is 131,000 tokens.
 3. Each event is approx 100 tokens, so max ~ 1300 events can be processed in one call.
 */
 
