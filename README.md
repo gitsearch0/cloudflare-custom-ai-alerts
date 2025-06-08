@@ -156,12 +156,40 @@ After deployment:
 - Only trigger alerts when there is changes in the 24-hour window
 - When alerts are triggered:
   - Events are analyzed by Llama 4 Scout (17B) model
+  - Each event contains:
+    - `count`: Number of occurrences
+    - `dimensions`: Detailed event information
+      - `action`: Action taken (block, challenge, etc.)
+      - `botScore`: Bot detection score (1-99)
+      - `clientAsn`: Client's ASN number
+      - `clientCountryName`: Client's country code
+      - `clientIP`: Client's IP address
+      - `clientRequestHTTPHost`: Targeted host
+      - `clientRequestPath`: Requested path
+      - `description`: Security rule name/description
+      - `edgeResponseStatus`: HTTP response status
+      - `ja4`: Client fingerprint
+      - `source`: Rule source (firewallManaged, etc.)
   - AI provides a structured analysis including:
     - Attack summary
     - Severity assessment
     - Key indicators (geographic, ASNs, targets, patterns)
     - Recommended actions
   - Analysis and raw events are sent via webhook
+
+### Event Processing Limits
+
+1. **GraphQL Query Limit**
+
+   - Default limit is 25 events per query
+   - Can be increased by modifying the `limit` parameter in the GraphQL query
+   - Consider response time when increasing the limit
+
+2. **AI Model Token Limits**
+   - Llama 4 Scout (17B) has a context window of 131,000 tokens
+   - Each event consumes approximately 100 tokens
+   - Maximum theoretical limit: ~1,300 events per analysis
+   - Recommended to stay well below this limit for optimal performance
 
 ### Alert Conditions
 
