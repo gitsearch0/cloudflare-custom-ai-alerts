@@ -8,7 +8,6 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-.dev.vars
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 
@@ -173,3 +172,6 @@ dist
 .dev.vars
 .wrangler/
 .env.vars
+.dev.vars
+.DS_Store
+
