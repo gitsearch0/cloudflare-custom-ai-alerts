@@ -2,25 +2,26 @@
 
 A Cloudflare Worker that monitors security events and sends alerts with AI-powered analysis. This solution uses Cloudflare's Workers AI with Llama 4 Scout model to provide intelligent security analysis and automated alerts.
 
-## Features
+## Deployment Methods
 
-- 🔍 Real-time security event monitoring
-- 🤖 AI-powered analysis using Llama 4 Scout (17B)
-- 📊 Detailed attack metrics and patterns
-- 🔔 Automated alerts via webhook
-- 💾 Persistent state tracking with KV storage
-- 🔄 Configurable alert thresholds
-- 🛡️ Integration with Cloudflare Ruleset Engine
+### Method 1: One-Click Deployment
 
-## Quick Start
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/iamask/cloudflare-custom-ai-alerts)
 
-1. Set up Cloudflare API token and KV namespace
-2. Configure environment variables
-3. Deploy with `npx wrangler deploy`
+The easiest way to deploy this worker. This will:
 
-## Prerequisites
+- Clone the repository to your GitHub account
+- Set up required resources (KV namespace, AI binding)
+- Configure and deploy the worker
+- Set up necessary secrets and environment variables
 
-1. **Cloudflare Account and API Token**
+### Method 2: Manual Deployment
+
+If you prefer to deploy manually or need more control over the deployment process, follow these steps:
+
+1. **Prerequisites**
+
+   a) **Cloudflare Account and API Token**
 
    - Create an API token with the following permissions:
      - Account Settings: Read
@@ -28,59 +29,7 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
      - Zone: Read
    - [Create API Token](https://dash.cloudflare.com/profile/api-tokens)
 
-2. **Optional: Monitor Specific Rulesets**
-
-   By default, the worker monitors all security events. However, you can optionally configure it to monitor specific types of rulesets (add filter in Graphql API):
-
-   a) **Monitor Rate Limit Rules**
-
-   - Using API:
-     ```bash
-     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-     -H "Authorization: Bearer {api_token}"
-     ```
-   - Or from Dashboard:
-     - Go to Security > WAF > Rulesets
-     - Find your rate limit ruleset and copy the ID
-
-   b) **Monitor Custom Rules**
-
-   - Using API:
-     ```bash
-     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-     -H "Authorization: Bearer {api_token}"
-     ```
-   - Or from Dashboard:
-     - Go to Security > WAF > Rulesets
-     - Find your custom ruleset and copy the ID
-
-   c) **Monitor Managed Rules**
-
-   - Using API:
-     ```bash
-     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-     -H "Authorization: Bearer {api_token}"
-     ```
-   - Or from Dashboard:
-     - Go to Security > WAF > Rulesets
-     - Find your managed ruleset and copy the ID
-
-3. **Optional: Monitor Specific Rules**
-
-   You can also monitor individual rules within a ruleset (e.g., specific DDoS signatures or rate limit rules):
-
-   - Using API:
-     ```bash
-     curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
-     -H "Authorization: Bearer {api_token}"
-     ```
-   - Or from Dashboard:
-     - Go to Security > WAF > Rulesets
-     - Find your ruleset and copy the specific rule ID
-
-   Note: To monitor specific rules, you'll need to modify the GraphQL query in the worker code to include the rule ID filter.
-
-4. **Create Cloudflare KV Namespace**
+   b) **Create Cloudflare KV Namespace**
 
    ```bash
    wrangler kv:namespace create "ALERTS_KV"
@@ -88,7 +37,7 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
 
    - Note the ID and add it to `wrangler.jsonc`
 
-5. **Environment Variables**
+   c) **Environment Variables**
    Create `.env.vars` file with:
 
    ```
@@ -97,14 +46,15 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
    WEBHOOK_URL="your_webhook_url"
    ```
 
-6. **Enable Workers AI**
+   d) **Enable Workers AI**
+
    - Go to Workers & Pages > AI
    - Enable AI for your account
    - Add AI binding to `wrangler.jsonc`
 
-## Configuration
+2. **Configuration**
 
-1. **Update wrangler.jsonc**
+   a) **Update wrangler.jsonc**
 
    ```json
    {
@@ -126,27 +76,84 @@ A Cloudflare Worker that monitors security events and sends alerts with AI-power
    }
    ```
 
-   The cron trigger `"* * * * *"` will run the worker every minute. You can adjust the cron schedule as needed.
+   b) **Set Secrets**
 
-2. **Set Secrets**
    ```bash
    npx wrangler secret bulk .env.vars
    ```
-   This command will upload all environment variables from your `.env.vars` file as secrets. Best practice to not to expose secrets in the code.
 
-## Deployment
+3. **Deploy**
 
-Deploy the worker using:
+   ```bash
+   npx wrangler deploy
+   ```
 
-```bash
-npx wrangler deploy
-```
+4. **Verify Deployment**
+   - Check Workers dashboard
+   - Monitor logs for successful execution
+   - Test webhook delivery
 
-After deployment:
+## Features
 
-- Check Workers dashboard
-- Monitor logs for successful execution
-- Test webhook delivery
+- 🔍 Real-time security event monitoring
+- 🤖 AI-powered analysis using Llama 4 Scout (17B)
+- 📊 Detailed attack metrics and patterns
+- 🔔 Automated alerts via webhook
+- 💾 Persistent state tracking with KV storage
+- 🔄 Configurable alert thresholds
+- 🛡️ Integration with Cloudflare Ruleset Engine
+
+## Optional: Monitor Specific Rulesets
+
+By default, the worker monitors all security events. However, you can optionally configure it to monitor specific types of rulesets:
+
+### Rate Limit Rules
+
+- Using API:
+  ```bash
+  curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+  -H "Authorization: Bearer {api_token}"
+  ```
+- Or from Dashboard:
+  - Go to Security > WAF > Rulesets
+  - Find your rate limit ruleset and copy the ID
+
+### Custom Rules
+
+- Using API:
+  ```bash
+  curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+  -H "Authorization: Bearer {api_token}"
+  ```
+- Or from Dashboard:
+  - Go to Security > WAF > Rulesets
+  - Find your custom ruleset and copy the ID
+
+### Managed Rules
+
+- Using API:
+  ```bash
+  curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+  -H "Authorization: Bearer {api_token}"
+  ```
+- Or from Dashboard:
+  - Go to Security > WAF > Rulesets
+  - Find your managed ruleset and copy the ID
+
+### Monitor Specific Rules
+
+You can also monitor individual rules within a ruleset:
+
+- Using API:
+  ```bash
+  curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+  -H "Authorization: Bearer {api_token}"
+  ```
+- Or from Dashboard:
+  - Go to Security > WAF > Rulesets
+  - Find your ruleset and copy the specific rule ID
+
+Note: To monitor specific rules, you'll need to modify the GraphQL query in the worker code to include the rule ID filter.
 
 ## How It Works
 
@@ -169,6 +176,7 @@ After deployment:
       - `description`: Security rule name/description
       - `edgeResponseStatus`: HTTP response status
       - `ja4`: Client fingerprint
+      - `botDetectionTags`: Bot detection information
       - `source`: Rule source (firewallManaged, etc.)
   - AI provides a structured analysis including:
     - Attack summary
@@ -210,26 +218,6 @@ After deployment:
     - No alert will be triggered
     - KV will not be updated
 
-### You can add further Modifications for Reduced Alerts
-
-- Tracks Total Count in KV:
-
-  - Calculates total count from all events
-  - Stores both the hash and total count in KV
-  - Compares current count with previous count
-
-- Alert Conditions:
-  - Triggers alert if:
-    - First run AND there are events
-    - OR attack count has doubled from previous count, not just hashchange (subsequent)
-
-## Development
-
-For local development:
-
-1. Create `.dev.vars` with the same content as `.env.vars`
-2. Run `wrangler dev` to test locally
-
 ## Troubleshooting
 
 1. **Check Worker Logs**
@@ -254,7 +242,7 @@ For local development:
 - [Workers AI](https://developers.cloudflare.com/workers-ai/)
 - [Workers Secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
 
-## Webhook
+## Webhook Example
 
 ![Webhook](https://r2.zxc.co.in/git_readme/ai-alert.png)
 
